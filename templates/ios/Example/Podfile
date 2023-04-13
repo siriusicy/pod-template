@@ -1,5 +1,17 @@
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://jihulab.com/yaya-ios/yayaspec.git'
+source 'https://github.com/aliyun/aliyun-specs.git'
+
+def jihu; return 'https://jihulab.com/yaya-ios/'; end
+def remotePod(name)
+   pod name, :git => jihu +"#{name}.git",:branch=>'dev'
+end
+
+def _localPod(name)
+   pod name, :path => "../../#{name}"
+end
+
+
 
 use_frameworks!
 
