@@ -1,5 +1,5 @@
 source 'https://github.com/CocoaPods/Specs.git'
-# source 'https://jihulab.com/yaya-ios/yayaspec.git'
+#source 'https://cdn.cocoapods.org/'
 
 require './podVariables.rb'
 

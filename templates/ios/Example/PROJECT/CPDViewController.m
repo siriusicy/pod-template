@@ -8,22 +8,100 @@
 
 #import "CPDViewController.h"
 
-@interface CPDViewController ()
+@interface CPDViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, copy) NSArray<NSString *> *dataArray;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
 @implementation CPDViewController
 
-- (void)viewDidLoad
-{
+
+- (void)viewDidLoad {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self creatUI];
+    
+    self.dataArray =  @[@"UIViewController"];
+    
+    [self.tableView reloadData];
+
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)creatUI{
+    
+    self.tableView.frame = CGRectMake(0,
+                                      0,
+                                      [UIScreen mainScreen].bounds.size.width,
+                                      [UIScreen mainScreen].bounds.size.height);
+    [self.view addSubview:self.tableView];
+
 }
+
+
+#pragma mark -  TableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 60;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class])];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([UITableViewCell class])];
+    }
+    
+    cell.textLabel.text = self.dataArray[indexPath.row];
+    
+    cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? [UIColor grayColor] : [UIColor whiteColor];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    // TODO:- DoSomeThing
+    UIViewController *vc = (UIViewController *)[[NSClassFromString(self.dataArray[indexPath.row]) alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    //[self presentViewController:vc animated:YES completion:nil];
+    
+}
+
+#pragma mark -  set/get
+
+- (UITableView *)tableView {
+    if (!_tableView) {
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.backgroundColor = [UIColor clearColor];
+        
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        
+        tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.01)];
+        tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 0.01)];
+        tableView.sectionHeaderHeight = 0.01;
+        tableView.sectionFooterHeight = 0.01;
+        
+        [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+        [tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([UITableViewHeaderFooterView class])];
+        
+        
+        _tableView = tableView;
+    }
+    return _tableView;
+}
+
 
 @end
