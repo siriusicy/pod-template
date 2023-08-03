@@ -36,9 +36,9 @@ class ViewController: UIViewController {
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1000, height: 0.01))
         tableView.sectionHeaderHeight = 0.01
         tableView.sectionFooterHeight = 0.01
-        if #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-        }
+        // if #available(iOS 11.0, *) {
+        //     tableView.contentInsetAdjustmentBehavior = .never
+        // }
         if #available(iOS 15.0, *) {
             tableView.sectionHeaderTopPadding = 0
         }

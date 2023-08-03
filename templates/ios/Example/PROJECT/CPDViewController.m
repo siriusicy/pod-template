@@ -91,9 +91,9 @@
         tableView.sectionHeaderHeight = 0.01;
         tableView.sectionFooterHeight = 0.01;
         
-        if (@available(iOS 11.0, *)) {
-            tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        }
+        // if (@available(iOS 11.0, *)) {
+        //     tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        // }
         if (@available(iOS 15.0, *)) {
             tableView.sectionHeaderTopPadding = 0;
         }
