@@ -57,10 +57,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class])];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([UITableViewCell class])];
-    }
-    
+
     cell.textLabel.text = self.dataArray[indexPath.row];
     
     cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? [UIColor grayColor] : [UIColor whiteColor];
@@ -94,10 +91,16 @@
         tableView.sectionHeaderHeight = 0.01;
         tableView.sectionFooterHeight = 0.01;
         
+        if (@available(iOS 11.0, *)) {
+            tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+        if (@available(iOS 15.0, *)) {
+            tableView.sectionHeaderTopPadding = 0;
+        }
+
         [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
         [tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([UITableViewHeaderFooterView class])];
-        
-        
+
         _tableView = tableView;
     }
     return _tableView;

@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var dataArray = [UIViewController.self];
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,7 +36,13 @@ class ViewController: UIViewController {
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1000, height: 0.01))
         tableView.sectionHeaderHeight = 0.01
         tableView.sectionFooterHeight = 0.01
-        
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        }
+        if #available(iOS 15.0, *) {
+            tableView.sectionHeaderTopPadding = 0
+        }
+
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: NSStringFromClass(UITableViewCell.self))
         
         return tableView
@@ -48,25 +56,30 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.dataArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
+        return 60
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self)) as! UITableViewCell
-
-        cell.textLabel?.text = "-=-=: \(indexPath.row)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(UITableViewCell.self))!
         
+        cell.textLabel?.text = NSStringFromClass(dataArray[indexPath.row])
+        
+        cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? UIColor.gray : UIColor.white
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        
+
+        let vc = dataArray[indexPath.row].init()
+        navigationController?.pushViewController(vc , animated: true)
+
     }
     
 }
