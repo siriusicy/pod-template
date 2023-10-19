@@ -1,4 +1,6 @@
-source 'https://github.com/CocoaPods/Specs.git'
+#source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
+
 # source 'https://jihulab.com/yaya-ios/yayaspec.git'
 
 require './podVariables.rb'

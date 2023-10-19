@@ -1,4 +1,6 @@
-source 'https://github.com/CocoaPods/Specs.git'
+#source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
+
 #source 'https://cdn.cocoapods.org/'
 
 require './podVariables.rb'
