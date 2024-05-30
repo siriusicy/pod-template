@@ -9,6 +9,10 @@ def remotePod(name)
    pod name, :git => github_url+"#{name}.git",:branch=>'dev'
 end
 
+def remoteExtraPod(name)
+   pod name, :git => gitlab_url+'extracode/'+"#{name}.git",:branch=>'dev'
+end
+
 def _localPod(name)
    pod name, :path => "../../#{name}"
 end
